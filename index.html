@@ -1,0 +1,345 @@
+Perfecto ❤️. Con eso Frizzio queda cerrado también:
+
+* Pizza mozzarella: $7.200
+* Pizza mozzarella y cebolla: $7.200
+* Pizza mozzarella y jamón: $7.700
+
+Ahora sí: ya podemos pegar la primera versión completa de la tienda. En GitHub, donde tenés creado index.html, hacé clic dentro del cuadro grande que dice “Enter file contents here”, pegá TODO lo siguiente y todavía no confirmes cambios hasta que termine de pegarse completo.
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grido Recreo | Pedidos</title>
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f5f7fb;
+  color:#172033;
+  padding-bottom:95px;
+}
+header{
+  background:linear-gradient(135deg,#0059c7,#0087ee);
+  color:white;
+  padding:25px 18px;
+  text-align:center;
+}
+header h1{
+  font-size:32px;
+  margin-bottom:5px;
+}
+header p{
+  font-size:15px;
+  opacity:.95;
+}
+.delivery-info{
+  background:white;
+  max-width:1000px;
+  margin:18px auto;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 4px 18px rgba(0,0,0,.08);
+}
+.delivery-info strong{
+  color:#0059c7;
+}
+.categories{
+  max-width:1000px;
+  margin:auto;
+  display:flex;
+  overflow-x:auto;
+  gap:8px;
+  padding:4px 14px 14px;
+}
+.categories button{
+  border:0;
+  white-space:nowrap;
+  padding:10px 15px;
+  border-radius:20px;
+  background:white;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  cursor:pointer;
+}
+.categories button:hover{
+  background:#0059c7;
+  color:white;
+}
+section{
+  max-width:1000px;
+  margin:24px auto;
+  padding:0 14px;
+}
+section h2{
+  font-size:24px;
+  color:#0059c7;
+  margin-bottom:14px;
+}
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+}
+.product{
+  background:white;
+  border-radius:18px;
+  padding:17px;
+  box-shadow:0 3px 15px rgba(0,0,0,.08);
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.product h3{
+  font-size:18px;
+}
+.product .price{
+  color:#0059c7;
+  font-size:20px;
+  font-weight:bold;
+}
+.product .small{
+  color:#687386;
+  font-size:13px;
+}
+.add-btn{
+  margin-top:auto;
+  background:#0059c7;
+  color:white;
+  border:0;
+  border-radius:12px;
+  padding:11px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.add-btn:hover{
+  background:#004494;
+}
+.cart-bar{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:white;
+  padding:12px 16px;
+  box-shadow:0 -3px 18px rgba(0,0,0,.15);
+  display:flex;
+  justify-content:center;
+  z-index:50;
+}
+.cart-button{
+  width:min(650px,100%);
+  background:#0059c7;
+  color:white;
+  border:0;
+  border-radius:16px;
+  padding:15px;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:100;
+}
+.modal.show{
+  display:flex;
+}
+.modal-box{
+  background:white;
+  width:100%;
+  max-width:620px;
+  border-radius:24px 24px 0 0;
+  padding:22px;
+  max-height:88vh;
+  overflow:auto;
+}
+.modal-box h2{
+  color:#0059c7;
+  margin-bottom:12px;
+}
+.close{
+  float:right;
+  border:0;
+  background:#eee;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  cursor:pointer;
+}
+.flavors{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:14px 0;
+}
+.flavor{
+  border:1px solid #d9deea;
+  padding:9px;
+  border-radius:10px;
+  font-size:14px;
+}
+.confirm{
+  width:100%;
+  border:0;
+  background:#0059c7;
+  color:white;
+  padding:14px;
+  border-radius:13px;
+  font-weight:bold;
+  font-size:16px;
+  cursor:pointer;
+}
+.cart-item{
+  padding:12px 0;
+  border-bottom:1px solid #e7e9ef;
+}
+.cart-item strong{
+  display:block;
+}
+.cart-item button{
+  margin-top:7px;
+  border:0;
+  background:#ffe6e6;
+  color:#b50000;
+  padding:6px 9px;
+  border-radius:8px;
+}
+.total{
+  font-size:22px;
+  font-weight:bold;
+  margin:18px 0 5px;
+}
+.minimum{
+  font-size:14px;
+  color:#697486;
+  margin-bottom:16px;
+}
+.minimum.error{
+  color:#c00000;
+  font-weight:bold;
+}
+.customer{
+  display:grid;
+  gap:10px;
+}
+.customer input,
+.customer textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccd2dd;
+  border-radius:11px;
+  font-size:16px;
+}
+.customer textarea{
+  min-height:75px;
+  resize:vertical;
+}
+.whatsapp{
+  width:100%;
+  margin-top:15px;
+  border:0;
+  border-radius:14px;
+  padding:15px;
+  background:#22c55e;
+  color:white;
+  font-weight:bold;
+  font-size:17px;
+  cursor:pointer;
+}
+.suggestion{
+  background:#f1f7ff;
+  border-radius:13px;
+  padding:13px;
+  margin:15px 0;
+}
+.suggestion button{
+  border:1px solid #0059c7;
+  background:white;
+  color:#0059c7;
+  border-radius:10px;
+  padding:8px 10px;
+  margin-top:8px;
+  margin-right:5px;
+}
+.empty{
+  color:#7b8494;
+  padding:15px 0;
+}
+@media(max-width:600px){
+  header h1{font-size:27px}
+  .products{grid-template-columns:1fr 1fr}
+  .product{padding:13px}
+  .product h3{font-size:15px}
+  .product .price{font-size:17px}
+  .flavors{grid-template-columns:1fr}
+}
+@media(max-width:410px){
+  .products{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>🍦 Grido Recreo</h1>
+  <p>Pedí online y recibí tu pedido en casa</p>
+</header>
+<div class="delivery-info">
+  🛵 <strong>Solo delivery</strong><br>
+  Horario: 13:00 a 20:00 hs<br>
+  Compra mínima: <strong>$10.000</strong>
+</div>
+<div class="categories">
+  <button onclick="goTo('kilo')">Helado por kilo</button>
+  <button onclick="goTo('tentacion')">Tentación</button>
+  <button onclick="goTo('bombones')">Bombones</button>
+  <button onclick="goTo('postres')">Postres</button>
+  <button onclick="goTo('tortas')">Tortas</button>
+  <button onclick="goTo('palitos')">Palitos</button>
+  <button onclick="goTo('familiares')">Familiares</button>
+  <button onclick="goTo('frizzio')">Frizzio</button>
+  <button onclick="goTo('extras')">Extras</button>
+</div>
+<div id="catalog"></div>
+<div class="cart-bar">
+  <button class="cart-button" onclick="openCart()">
+    🛒 Ver pedido · <span id="cartCount">0</span> productos · <span id="cartTotal">$0</span>
+  </button>
+</div>
+<div id="optionModal" class="modal">
+  <div class="modal-box">
+    <button class="close" onclick="closeOptions()">×</button>
+    <h2 id="optionTitle"></h2>
+    <div id="optionContent"></div>
+  </div>
+</div>
+<div id="cartModal" class="modal">
+  <div class="modal-box">
+    <button class="close" onclick="closeCart()">×</button>
+    <h2>Tu pedido 🛒</h2>
+    <div id="cartItems"></div>
+    <div class="suggestion">
+      <strong>¿Querés agregar algo más? 🍦</strong><br>
+      Podés sumar cucuruchos o un Tentación a tu pedido.
+      <br>
+      <button onclick="closeCart();goTo('extras')">Ver cucuruchos</button>
+      <button onclick="closeCart();goTo('tentacion')">Ver Tentación</button>
+    </div>
+    <div class="total">
+      Total: <span id="finalTotal">$0</span>
+    </div>
+    <div id="minimumText" class="minimum">
+      Compra mínima para delivery: $10.000
+    </div>
+    <div class="customer">
+      <input id="customerName" placeholder="Nombre y apellido">
+      <input id="customerAddress
